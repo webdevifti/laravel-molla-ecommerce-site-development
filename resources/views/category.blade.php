@@ -4,7 +4,7 @@
 <main class="main">
     <div class="page-header text-center" style="background-image: url('{{ asset('site_assets/assets/images/page-header-bg.jpg') }}')">
         <div class="container">
-            {{-- <h1 class="page-title">{{ $slug }}</h1> --}}
+            <h1 class="page-title">{{ $category }}</h1>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">

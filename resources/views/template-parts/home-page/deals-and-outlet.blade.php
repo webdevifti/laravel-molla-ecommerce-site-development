@@ -21,7 +21,7 @@
                             <span class="old-price">Was $150.99</span>
                         </div><!-- End .product-price -->
 
-                        <a href="product.html" class="btn btn-link"><span>Shop Now</span><i class="icon-long-arrow-right"></i></a>
+                        <a href="/shop" class="btn btn-link"><span>Shop Now</span><i class="icon-long-arrow-right"></i></a>
                     </div><!-- End .deal-content -->
 
                     <div class="deal-bottom">
@@ -55,6 +55,6 @@
         </div><!-- End .row -->
 
         <div class="more-container text-center mt-1 mb-5">
-            <a href="#" class="btn btn-outline-dark-2 btn-round btn-more"><span>Shop more Outlet deals</span><i class="icon-long-arrow-right"></i></a>
+            <a href="/shop" class="btn btn-outline-dark-2 btn-round btn-more"><span>Shop more Outlet deals</span><i class="icon-long-arrow-right"></i></a>
         </div><!-- End .more-container -->
     </div><!-- End .container -->

@@ -1,26 +1,23 @@
 @extends('master')
-@section('page_title', 'Search result - '. $q)
+@section('page_title', 'Shop')
 @section('MainContent')
 <main class="main">
     <div class="page-header text-center" style="background-image: url('{{ asset('site_assets/assets/images/page-header-bg.jpg') }}')">
         <div class="container">
-            <h1 class="page-title">Your search result for: '{{ $q }}'</h1>
+            <h1 class="page-title">Shop</h1>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
-   
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $q }}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
-    @if($get_search_product->count() != 0)
+    @if($all_products)
     <div class="page-content">
         <div class="container">
-           
             <div class="toolbox">
                 <div class="toolbox-left">
                     <a href="#" class="sidebar-toggler"><i class="icon-bars"></i>Filters</a>
@@ -40,6 +37,8 @@
                                 <option value="popularity" selected="selected">Most Popular</option>
                                 <option value="rating">Most Rated</option>
                                 <option value="date">Date</option>
+                                <option value="price">Price low to high</option>
+                                <option value="price">Price high to low</option>
                             </select>
                         </div>
                     </div><!-- End .toolbox-sort -->
@@ -48,7 +47,7 @@
 
             <div class="products">
                 <div class="row">
-                    @foreach ($get_search_product as $item)
+                    @foreach ($all_products as $item)
                     <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                         <div class="product">
                             <figure class="product-media">
@@ -345,7 +344,7 @@
         </div><!-- End .container -->
     </div><!-- End .page-content -->
     @else
-        <h3 style="text-align: center;margin: 100px 0px;">No Product found related search term</h3>
+        <p>No Product found!</p>
     @endif
 </main>
 @endsection

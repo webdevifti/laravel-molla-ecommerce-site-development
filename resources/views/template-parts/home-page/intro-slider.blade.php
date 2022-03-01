@@ -25,7 +25,7 @@
                             </span>
                         </div><!-- End .intro-price -->
 
-                        <a href="category.html" class="btn btn-primary btn-round">
+                        <a href="/shop" class="btn btn-primary btn-round">
                             <span>Shop More</span>
                             <i class="icon-long-arrow-right"></i>
                         </a>
@@ -48,7 +48,7 @@
                             </span>
                         </div><!-- End .intro-price -->
 
-                        <a href="category.html" class="btn btn-primary btn-round">
+                        <a href="/shop" class="btn btn-primary btn-round">
                             <span>Shop More</span>
                             <i class="icon-long-arrow-right"></i>
                         </a>

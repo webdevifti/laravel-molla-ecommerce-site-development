@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Auth;
 */
 Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/product-detail/{pid}',[ProductDetailsController::class, 'index'])->name('product.detail');
+Route::get('/shop',[HomeController::class, 'shop']);
 Route::get('/shop/{category_slug}',[frontcategorypage::class, 'getCategoryProduct']);
 Route::get('/search',[HomeController::class, 'search'])->name('product.search');
 

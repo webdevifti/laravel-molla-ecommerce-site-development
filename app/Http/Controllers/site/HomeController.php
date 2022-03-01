@@ -51,4 +51,23 @@ class HomeController extends Controller
         // dd($get_search_product);
         return view('search', compact('get_all_cats','cart_data','q','get_search_product','customer'));
     }
+
+
+    public function shop(){
+        $cid = session('LoggedCustomer');
+        $customer = Customer::where('customer_email', $cid)->first();
+        $cid = session('LoggedCustomer');
+        $customer = Customer::where('customer_email', $cid)->first();
+        // dd($customer);
+        if($customer != null){
+            $cart_data = Cart::where('customer_id',$customer->id)->orderBy('created_at','DESC')->get();
+            
+        }else{
+            $cart_data = [];
+        }
+        $get_all_cats = Category::where('status',1)->withoutTrashed()->get();
+
+        $all_products = Product::where('status',1)->get();
+        return view('shop', compact('customer','cart_data','get_all_cats','all_products'));
+    }
 }
