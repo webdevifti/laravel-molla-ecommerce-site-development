@@ -53,9 +53,8 @@ class HomeController extends Controller
     }
 
 
-    public function shop(){
-        $cid = session('LoggedCustomer');
-        $customer = Customer::where('customer_email', $cid)->first();
+    public function shop(Request $request){
+
         $cid = session('LoggedCustomer');
         $customer = Customer::where('customer_email', $cid)->first();
         // dd($customer);
@@ -67,7 +66,35 @@ class HomeController extends Controller
         }
         $get_all_cats = Category::where('status',1)->withoutTrashed()->get();
 
-        $all_products = Product::where('status',1)->get();
-        return view('shop', compact('customer','cart_data','get_all_cats','all_products'));
+        $sort = '';
+        $sort_text = '';
+        if($request->get('sort') !== null){
+            $sort = $request->get('sort');
+            
+            if($sort == 'default'){
+                $sort_text = 'Sort by default';
+                $all_products = Product::where('status',1)->get();
+            }else if($sort == 'rating'){
+                $sort_text = 'Sort by Rating';
+                $all_products = Product::where('status',1)->get();
+            }else if($sort == 'date_asc'){
+                $sort_text = 'Sort by date newest';
+                $all_products = Product::where('status',1)->orderBy('created_at','ASC')->get();
+            }else if($sort == 'date_desc'){
+                $sort_text = 'Sort by date oldest';
+                $all_products = Product::where('status',1)->orderBy('created_at','DESC')->get();
+            }else if($sort == 'price_low_to_high'){
+                $sort_text = 'Sort by price low to high';
+                $all_products = Product::where('status',1)->orderBy('selling_price','ASC')->get();
+            }else if($sort == 'price_high_to_low'){
+                $sort_text = 'Sort by price high to low';
+                $all_products = Product::where('status',1)->orderBy('selling_price','DESC')->get();
+            }
+        }else{
+            $all_products = Product::where('status',1)->get();
+        }
+       
+        // 
+        return view('shop', compact('sort_text','customer','cart_data','get_all_cats','all_products'));
     }
 }

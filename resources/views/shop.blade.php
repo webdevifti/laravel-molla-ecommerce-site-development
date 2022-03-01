@@ -1,6 +1,7 @@
 @extends('master')
 @section('page_title', 'Shop')
 @section('MainContent')
+
 <main class="main">
     <div class="page-header text-center" style="background-image: url('{{ asset('site_assets/assets/images/page-header-bg.jpg') }}')">
         <div class="container">
@@ -33,14 +34,18 @@
                     <div class="toolbox-sort">
                         <label for="sortby">Sort by:</label>
                         <div class="select-custom">
-                            <select name="sortby" id="sortby" class="form-control">
-                                <option value="popularity" selected="selected">Most Popular</option>
+                        
+                            <select onchange="sort_product()" id="sortby" class="form-control">
+                                <option value="">select sorting</option>
+                                <option value="default">By Default</option>
                                 <option value="rating">Most Rated</option>
-                                <option value="date">Date</option>
-                                <option value="price">Price low to high</option>
-                                <option value="price">Price high to low</option>
+                                <option value="date_asc">Date newest</option>
+                                <option value="date_desc">Date oldest</option>
+                                <option value="price_low_to_high">Price low to high</option>
+                                <option value="price_high_to_low">Price high to low</option>
                             </select>
                         </div>
+                        {{ $sort_text }}
                     </div><!-- End .toolbox-sort -->
                 </div><!-- End .toolbox-right -->
             </div><!-- End .toolbox -->
@@ -347,5 +352,9 @@
         <p>No Product found!</p>
     @endif
 </main>
+
+<form id="filterForm">
+    <input type="hidden" name="sort" id="sort">
+</form>
 @endsection
         

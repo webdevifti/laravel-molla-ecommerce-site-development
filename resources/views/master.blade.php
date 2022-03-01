@@ -875,6 +875,12 @@
                 }
             });
         }
+
+        function sort_product(){
+            var sort_by_value = $('#sortby').val();
+            $('#sort').val(sort_by_value);
+            $('#filterForm').submit();
+        }
     </script>
 </body>
 
