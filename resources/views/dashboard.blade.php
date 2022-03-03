@@ -105,34 +105,35 @@
                                 </div><!-- .End .tab-pane -->
 
                                 <div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
-                                    <form action="#">
+                                    <form action="{{ route('customer.profile.update',$customer->id) }}" method="POST">
+                                        @csrf
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>First Name *</label>
-                                                <input type="text" class="form-control" required>
+                                                <input type="text" name="first_name" class="form-control" required>
                                             </div><!-- End .col-sm-6 -->
 
                                             <div class="col-sm-6">
                                                 <label>Last Name *</label>
-                                                <input type="text" class="form-control" required>
+                                                <input type="text" name="last_name" class="form-control" required>
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
 
                                         <label>Display Name *</label>
-                                        <input type="text" value="{{ $customer->customer_username }}" class="form-control" required>
+                                        <input type="text" value="{{ $customer->customer_username }}" class="form-control" name="user_name" required>
                                         <small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
 
                                         <label>Email address *</label>
-                                        <input type="email" class="form-control" required>
+                                        <input type="email" name="email" class="form-control" required>
 
                                         <label>Current password (leave blank to leave unchanged)</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" name="current_pass" class="form-control">
 
                                         <label>New password (leave blank to leave unchanged)</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" name="new_password" class="form-control">
 
                                         <label>Confirm new password</label>
-                                        <input type="password" class="form-control mb-2">
+                                        <input type="password" name="confirm_new_pass" class="form-control mb-2">
 
                                         <button type="submit" class="btn btn-outline-primary-2">
                                             <span>SAVE CHANGES</span>

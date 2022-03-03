@@ -91,4 +91,17 @@ class CustomerController extends Controller
             return redirect('/');
         }
     }
+
+    public function accountUpdate(Request $request, $id){
+        $request->validate([
+            'first_name' => 'string|max:255',
+            'last_name' => 'string|max:255',
+            'user_name' => 'string|max:255',
+            'email' => 'unique:customers|email',
+        ]);
+
+        $customer = Customer::find($id);
+        $customer->customer_first_name = $request->first_name;
+        $customer->customer_last_name = $request->last_name;
+    }
 }

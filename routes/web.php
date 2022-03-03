@@ -51,10 +51,11 @@ Route::group(['middleware' => ['CustomerAuth']], function(){
     Route::post('/cart/increment',[CartController::class, 'increment']);
     Route::post('/cart/decrement',[CartController::class, 'decrement']);
     Route::post('/cart/delete',[CartController::class, 'delete']);
-    
     Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout');
+    // Route::post('/customer/cart/coupon/apply', [CartController::class, 'applyCoupon'])->name('apply.coupon');
 
-    Route::post('/customer/cart/coupon/apply', [CartController::class, 'applyCoupon'])->name('apply.coupon');
+    //Customer Profile / Account Setting
+    Route::post('/customer/profile/update/{id}', [CustomerController::class, 'accountUpdate'])->name('customer.profile.update');
 });
 // End of Middleware for Authentic Customer 
 
