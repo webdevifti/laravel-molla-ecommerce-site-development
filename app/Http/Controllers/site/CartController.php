@@ -5,8 +5,10 @@ namespace App\Http\Controllers\site;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Constraint\Count;
 
 class CartController extends Controller
 {
@@ -206,6 +208,29 @@ class CartController extends Controller
                  'error' => 'Not Upated'
              ]);
          }
-     }
+    }
+
+    public function applyCoupon(Request $request){
+        $request->validate([
+            'coupon_code' => 'required'
+        ]);
+
+        $exitCoupon = Coupon::where('coupon_name', $request->coupon_code)->first();
+        if($exitCoupon != null){
+            $cart_total = 0;
+            $cid = session('LoggedCustomer');
+            $customer = Customer::where('customer_email', $cid)->first();
+            $cart_data = Cart::where('customer_id',$customer->id)->orderBy('created_at','DESC')->get();
+            foreach($cart_data as $cart){
+                $cart_total_price = $cart->qty*$cart->relCartToProduct->selling_price;
+                $cart_total += $cart_total_price;
+            }
+           $after_coupon =  ($cart_total*$exitCoupon->coupon_value) / 100;
+           return back()->with('total_price_after_coupon',$after_coupon);
+        }else{
+            return back()->with('coupon_not_exist','Invalid Code');
+        }
+
+    }
     
 }

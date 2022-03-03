@@ -53,6 +53,8 @@ Route::group(['middleware' => ['CustomerAuth']], function(){
     Route::post('/cart/delete',[CartController::class, 'delete']);
     
     Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout');
+
+    Route::post('/customer/cart/coupon/apply', [CartController::class, 'applyCoupon'])->name('apply.coupon');
 });
 // End of Middleware for Authentic Customer 
 

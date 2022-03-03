@@ -69,20 +69,29 @@
                             </tbody>
                         </table><!-- End .table table-wishlist -->
 
-                        <div class="cart-bottom">
+                        {{-- <div class="cart-bottom">
                             <div class="cart-discount">
-                                <form action="#">
+                               
+                                <form action="{{ route('apply.coupon') }}" method="POST">
+                                    @csrf
                                     <div class="input-group">
-                                        <input type="text" class="form-control" required placeholder="coupon code">
+                                        <input type="text" name="coupon_code" class="form-control" placeholder="coupon code" value="{{ @old('coupon_code') }}">
+
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
                                         </div><!-- .End .input-group-append -->
                                     </div><!-- End .input-group -->
+                                    @error('coupon_code')
+                                        <p style="color: red">{{ $message }}</p>
+                                    @enderror
+                                    @if(session()->has('coupon_not_exist'))
+                                        <p style="color: red">{{ session()->get('coupon_not_exist') }}</p>
+                                    @endif
                                 </form>
-                            </div><!-- End .cart-discount -->
+                            </div><!-- End .cart-discount --> --}}
 
                             {{-- <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a> --}}
-                        </div><!-- End .cart-bottom -->
+                        {{-- </div><!-- End .cart-bottom --> --}}
                     </div><!-- End .col-lg-9 -->
                     <aside class="col-lg-3">
                         <div class="summary summary-cart">
@@ -100,7 +109,9 @@
                                         }
                                     @endphp
                                         <td id="final_cart_subtotal">BDT: {{ $total_price }}</td>
+                                        
                                     </tr><!-- End .summary-subtotal -->
+                                  
                                     
                                 </tbody>
                             </table><!-- End .table table-summary -->
