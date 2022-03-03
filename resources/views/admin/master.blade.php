@@ -98,6 +98,11 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Brand Master</span></a>
             </li>
+            <li class="nav-item {{ (request()->is('admin/coupon-code')) ? 'active': '' }}">
+                <a class="nav-link" href="{{ route('admin.coupon') }}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Coupon Code</span></a>
+            </li>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

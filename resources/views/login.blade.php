@@ -25,14 +25,14 @@
                     <div class="form-tab">
                         <ul class="nav nav-pills nav-fill" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" id="signin-tab-2" data-toggle="tab" href="#signin-2" role="tab" aria-controls="signin-2" aria-selected="false">Sign In</a>
+                                <a class="nav-link active" id="signin-tab-2" data-toggle="tab" href="#signin-2" role="tab" aria-controls="signin-2" aria-selected="false">Sign In</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" id="register-tab-2" data-toggle="tab" href="#register-2" role="tab" aria-controls="register-2" aria-selected="true">Register</a>
+                                <a class="nav-link" id="register-tab-2" data-toggle="tab" href="#register-2" role="tab" aria-controls="register-2" aria-selected="true">Register</a>
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane fade" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+                            <div class="tab-pane fade show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
                                 <form action="{{ route('customer.login') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
@@ -89,7 +89,7 @@
                                     </div><!-- End .row -->
                                 </div><!-- End .form-choice -->
                             </div><!-- .End .tab-pane -->
-                            <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+                            <div class="tab-pane fade" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
                                 <form action="{{ route('customer.registration') }}" method="POST">
                                     @csrf
                                     <div class="form-group">

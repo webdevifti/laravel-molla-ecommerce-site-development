@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ColorController;
+use App\Http\Controllers\admin\CouponCodeController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\site\CheckoutController;
@@ -113,4 +114,12 @@ Route::group(['middleware' => ['protectedRoutes']], function(){
     Route::get('/admin/brand/{id}/edit', [BrandController::class,'edit'])->name('admin.brand.edit');
     Route::put('/admin/brand/update/{id}', [BrandController::class,'update'])->name('admin.brand.update');
     Route::get('/admin/brand/delete/{id}', [BrandController::class,'delete'])->name('admin.brand.delete');
+
+
+    // Admin Coupon Code Routes
+    Route::get('/admin/coupon-code', [CouponCodeController::class, 'index'])->name('admin.coupon');
+    Route::post('/admin/coupon/create',[CouponCodeController::class, 'store'])->name('admin.coupon.store');
+    Route::get('/admin/coupon/status/{id}',[CouponCodeController::class,'statusChange'])->name('admin.coupon.status');
+    Route::get('/admin/coupon/{id}/edit',[CouponCodeController::class, 'edit'])->name('admin.coupon.edit');
+    Route::get('/admin/coupon/delete/{id}',[CouponCodeController::class, 'delete']);
 });
