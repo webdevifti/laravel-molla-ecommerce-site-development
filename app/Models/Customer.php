@@ -21,4 +21,13 @@ class Customer extends Model
         'customer_zipcode',
         'is_verified'
     ];
+
+
+    public function relWithBill(){
+        return $this->belongsTo(BillingInfo::class, 'id');
+    }
+
+    public function relToOrderPurchase(){
+        return $this->hasMany(OrderPurchase::class, 'id');
+    }
 }

@@ -33,12 +33,12 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label>First Name *</label>
-                                        <input type="text" class="form-control" required>
+                                        <input type="text" class="form-control" required value="{{ $customer->customer_firstname }}">
                                     </div><!-- End .col-sm-6 -->
 
                                     <div class="col-sm-6">
                                         <label>Last Name *</label>
-                                        <input type="text" class="form-control" required>
+                                        <input type="text" class="form-control" required value="{{ $customer->customer_lastname }}">
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
@@ -72,17 +72,17 @@
 
                                     <div class="col-sm-6">
                                         <label>Phone *</label>
-                                        <input type="tel" class="form-control" required>
+                                        <input type="tel" class="form-control" required value="{{ $customer->customer_phone_number }}">
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
                                 <label>Email address *</label>
-                                <input type="email" class="form-control" required>
+                                <input type="email" class="form-control" required value="{{ $customer->customer_email }}">
 
-                                <div class="custom-control custom-checkbox">
+                                {{-- <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
                                     <label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
-                                </div><!-- End .custom-checkbox -->
+                                </div><!-- End .custom-checkbox --> --}}
 
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
@@ -105,18 +105,22 @@
                                     </thead>
 
                                     <tbody>
+                                        @foreach($cart_data as $cart)
                                         <tr>
-                                            <td><a href="#">Beige knitted elastic runner shoes</a></td>
-                                            <td>$84.00</td>
+                                            <td><a href="{{ route('product.detail',$cart->relCartToProduct->product_slug) }}">{{ $cart->relCartToProduct->product_title }}</a></td>
+                                            <td>BDT {{ $cart->qty*$cart->relCartToProduct->selling_price }}</td>
                                         </tr>
-
-                                        <tr>
-                                            <td><a href="#">Blue utility pinafore denimdress</a></td>
-                                            <td>$76,00</td>
-                                        </tr>
+                                        @endforeach
                                         <tr class="summary-subtotal">
+                                            @php
+                                                $cart_total = 0;
+                                                foreach($cart_data as $cart){
+                                                    $cart_total_price = $cart->qty*$cart->relCartToProduct->selling_price;
+                                                    $cart_total += $cart_total_price;
+                                                }
+                                            @endphp
                                             <td>Subtotal:</td>
-                                            <td>$160.00</td>
+                                            <td>BDT: {{ $cart_total }}</td>
                                         </tr><!-- End .summary-subtotal -->
                                         <tr>
                                             <td>Shipping:</td>
@@ -124,7 +128,7 @@
                                         </tr>
                                         <tr class="summary-total">
                                             <td>Total:</td>
-                                            <td>$160.00</td>
+                                            <td>BDT {{ $cart_total }}</td>
                                         </tr><!-- End .summary-total -->
                                     </tbody>
                                 </table><!-- End .table table-summary -->

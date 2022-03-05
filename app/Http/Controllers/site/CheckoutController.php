@@ -23,6 +23,8 @@ class CheckoutController extends Controller
             $cart_data = [];
         }
         $get_all_cats = Category::where('status',1)->withoutTrashed()->get();
-        return view('checkout', compact('cart_data','get_all_cats'));
+        return view('checkout', compact('cart_data','get_all_cats','customer'));
     }
+
+
 }
