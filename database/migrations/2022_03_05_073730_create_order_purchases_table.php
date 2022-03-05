@@ -17,9 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer('customer_id');
             $table->integer('billing_id');
-            $table->integer('cart_id');
+            // $table->integer('cart_id');
             $table->string('payment_type');
-            
             $table->timestamps();
         });
     }

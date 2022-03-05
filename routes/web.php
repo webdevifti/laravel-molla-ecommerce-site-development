@@ -12,6 +12,7 @@ use App\Http\Controllers\site\CartController;
 use App\Http\Controllers\site\HomeController;
 use App\Http\Controllers\site\CategoryController as frontcategorypage;
 use App\Http\Controllers\site\CustomerController;
+use App\Http\Controllers\site\OrderPurchaseController;
 use App\Http\Controllers\site\ProductDetailsController;
 use App\Http\Controllers\site\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,8 @@ Route::group(['middleware' => ['CustomerAuth']], function(){
     Route::post('/cart/decrement',[CartController::class, 'decrement']);
     Route::post('/cart/delete',[CartController::class, 'delete']);
     Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout');
+
+    Route::post('/customer/order/process',[OrderPurchaseController::class, 'OrderPurchase'])->name('customer.order.process');
     // Route::post('/customer/cart/coupon/apply', [CartController::class, 'applyCoupon'])->name('apply.coupon');
 
     //Customer Profile / Account Setting

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRegisterRequest;
+use App\Models\BillingInfo;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\OrderPurchase;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -76,7 +78,9 @@ class CustomerController extends Controller
         }else{
             $cart_data = [];
         }
-        return view('dashboard', compact('get_all_cats','customer','cart_data'));
+        $orders = OrderPurchase::where('customer_id',$customer->id)->get();
+        
+        return view('dashboard', compact('get_all_cats','customer','cart_data','orders'));
     }
 
     public function getLoggedCustomer(){

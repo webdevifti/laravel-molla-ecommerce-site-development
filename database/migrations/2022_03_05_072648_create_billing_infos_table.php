@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('town_city');
             $table->string('state_country');
             $table->integer('zip_code');
-            $table->text('order_notes');
+            $table->text('order_notes')->nullable();
             $table->timestamps();
         });
     }

@@ -18,7 +18,10 @@
         </nav><!-- End .breadcrumb-nav -->
         @if(session()->has('updated'))
             <p style="color: #fff;text-align:center;font-size: 21px;background: green;">{{ session()->get('updated') }}</p>
-        @endif    
+        @endif  
+        @if(session()->has('orderDone'))
+            <p style="color: #fff;text-align:center;font-size: 21px;background: green;">{{ session()->get('orderDone') }}</p>
+        @endif
         <div class="page-content">
             <div class="dashboard">
                 <div class="container">
@@ -64,8 +67,33 @@
                                 </div><!-- .End .tab-pane -->
 
                                 <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
-                                    <p>No order has been made yet.</p>
-                                    <a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+                                    @if($orders)
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Payment Method</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($orders as $order)
+                                            <tr>
+                                                {{-- <td>{{ $order->relWithBillInfo->customer_company_name }}</td> --}}
+                                                <td>{{ $order->id }}</td>
+                                                <td>{{ $order->payment_type }}</td>
+                                                <td>
+                                                    <a href="">View Details</a>
+                                                    <a href="">Download Invoice</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    @else
+                                        <p>No order has been made yet.</p>
+                                        <a href="/shop" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+                                    @endif
                                 </div><!-- .End .tab-pane -->
 
                                 <div class="tab-pane fade" id="tab-downloads" role="tabpanel" aria-labelledby="tab-downloads-link">
