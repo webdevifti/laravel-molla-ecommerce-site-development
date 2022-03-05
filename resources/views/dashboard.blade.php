@@ -16,7 +16,9 @@
                 </ol>
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
-
+        @if(session()->has('updated'))
+            <p style="color: #fff;text-align:center;font-size: 21px;background: green;">{{ session()->get('updated') }}</p>
+        @endif    
         <div class="page-content">
             <div class="dashboard">
                 <div class="container">
@@ -110,21 +112,29 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>First Name *</label>
-                                                <input type="text" name="first_name" class="form-control" required>
+                                                <input type="text" name="first_name" class="form-control"  value="{{ $customer->customer_firstname }}">
+                                                @error('first_name') <span style="color: red">{{ $message }}</span>@enderror
                                             </div><!-- End .col-sm-6 -->
 
                                             <div class="col-sm-6">
                                                 <label>Last Name *</label>
-                                                <input type="text" name="last_name" class="form-control" required>
+                                                <input type="text" name="last_name" class="form-control" required value="{{ $customer->customer_lastname }}">
+                                                @error('last_name') <span style="color: red">{{ $message }}</span>@enderror
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
 
                                         <label>Display Name *</label>
                                         <input type="text" value="{{ $customer->customer_username }}" class="form-control" name="user_name" required>
                                         <small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+                                        @error('user_name') <span style="color: red">{{ $message }}</span>@enderror
 
                                         <label>Email address *</label>
-                                        <input type="email" name="email" class="form-control" required>
+                                        <input type="email" name="email" value="{{ $customer->customer_email }}" class="form-control" readonly>
+                                        @error('email') <span style="color: red">{{ $message }}</span>@enderror
+
+                                        <label>Phone Number *</label>
+                                        <input type="text" name="phone_number" class="form-control" required value="{{ $customer->customer_phone_number }}">
+                                        @error('phone_number') <span style="color: red">{{ $message }}</span>@enderror
 
                                         <label>Current password (leave blank to leave unchanged)</label>
                                         <input type="password" name="current_pass" class="form-control">

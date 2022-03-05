@@ -97,11 +97,17 @@ class CustomerController extends Controller
             'first_name' => 'string|max:255',
             'last_name' => 'string|max:255',
             'user_name' => 'string|max:255',
-            'email' => 'unique:customers|email',
+            'phone_number' => 'required|max:11'
         ]);
 
         $customer = Customer::find($id);
-        $customer->customer_first_name = $request->first_name;
-        $customer->customer_last_name = $request->last_name;
+        // dd($customer);
+        $customer->customer_firstname = $request->first_name;
+        $customer->customer_lastname = $request->last_name;
+        $customer->customer_username = $request->user_name;
+        $customer->customer_phone_number = $request->phone_number;
+        $customer->save();
+
+        return back()->with('updated','Save Changed');
     }
 }
