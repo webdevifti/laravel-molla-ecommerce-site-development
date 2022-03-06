@@ -67,7 +67,7 @@
                                 </div><!-- .End .tab-pane -->
 
                                 <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
-                                    @if($orders)
+                                    @if($orders->count() != 0)
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -83,10 +83,26 @@
                                                 <td>{{ $order->id }}</td>
                                                 <td>{{ $order->payment_type }}</td>
                                                 <td>
-                                                    <a href="">View Details</a>
-                                                    <a href="">Download Invoice</a>
+                                                    <a class="btn btn-info" href="#orderdetailmodal{{ $order->id }}"  data-toggle="modal" >View Details</a>
+                                                    <a href="" class="btn btn-success">Download Invoice</a>
                                                 </td>
                                             </tr>
+                                            <div class="modal fade" id="orderdetailmodal{{ $order->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true"><i class="icon-close"></i></span>
+                                                            </button>
+
+                                                            <div class="">
+
+                                                            </div>
+                                                           
+                                                        </div><!-- End .modal-body -->
+                                                    </div><!-- End .modal-content -->
+                                                </div><!-- End .modal-dialog -->
+                                            </div><!-- End .modal -->
                                             @endforeach
                                         </tbody>
                                     </table>
