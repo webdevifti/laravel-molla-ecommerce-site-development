@@ -88,15 +88,23 @@
                                                 </td>
                                             </tr>
                                             <div class="modal fade" id="orderdetailmodal{{ $order->id }}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-dialog modal-dialog-centered" style="max-width: 80% !important" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-body">
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true"><i class="icon-close"></i></span>
                                                             </button>
 
-                                                            <div class="">
-
+                                                            <div style="padding: 10px;">
+                                                                @foreach($orderDetails as $od)
+                                                                <div style="width: 100%; display:flex;align-items:center;justify-content:space-between">
+                                                                <p><img style="width: 100px;height: 100px;object-fit:cover" src="{{ asset('uploads/products/previews/'. $od->rel_to_product->product_preview_img) }}" alt=""></p>
+                                                                <p>{{ $od->rel_to_product->product_title }}</p>
+                                                                <p>{{ $od->qty }}</p>
+                                                                <p>{{ $od->rel_to_product->selling_price }}</p>
+                                                                <p>Sub Total: {{ $od->qty*$od->rel_to_product->selling_price }}</p>
+                                                                </div>
+                                                                @endforeach
                                                             </div>
                                                            
                                                         </div><!-- End .modal-body -->

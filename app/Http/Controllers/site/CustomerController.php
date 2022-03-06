@@ -8,6 +8,7 @@ use App\Models\BillingInfo;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\OrderDetails;
 use App\Models\OrderPurchase;
 use Exception;
 use Illuminate\Http\Request;
@@ -86,8 +87,8 @@ class CustomerController extends Controller
             $cart_data = [];
         }
         $orders = OrderPurchase::where('customer_id',$customer->id)->get();
-        
-        return view('dashboard', compact('get_all_cats','customer','cart_data','orders'));
+        $orderDetails = OrderDetails::where('customer_id', $customer->id)->get();
+        return view('dashboard', compact('get_all_cats','customer','cart_data','orders','orderDetails'));
     }
 
     public function getLoggedCustomer(){
