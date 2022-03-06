@@ -33,11 +33,20 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+                                @php
+                                if(isset($_COOKIE['customer_email'])){
+                                    $customer_email = $_COOKIE['customer_email'];
+                                    $is_remember = "checked='checked'";
+                                }else{
+                                    $customer_email = '';
+                                    $is_remember = '';
+                                }
+                            @endphp
                                 <form action="{{ route('customer.login') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <label for="singin-email-2">Username or email address *</label>
-                                        <input type="text" class="form-control" id="singin-email-2" name="singinemail" required value="{{ @old('singinemail') }}">
+                                        <input type="text" class="form-control" id="singin-email-2" name="signinemail" required value="{{ $customer_email }}">
                                         @error('singinemail')
                                         <p style="color: red">{{ $message }}</p>
                                        @enderror
@@ -48,7 +57,7 @@
 
                                     <div class="form-group">
                                         <label for="singin-password-2">Password *</label>
-                                        <input type="password" class="form-control" id="singin-password-2" name="singinpassword" required>
+                                        <input type="password" class="form-control" id="singin-password-2" name="signinpassword" required>
                                         @error('singinpassword')
                                         <p style="color: red">{{ $message }}</p>
                                        @enderror
@@ -62,9 +71,9 @@
                                             <span>LOG IN</span>
                                             <i class="icon-long-arrow-right"></i>
                                         </button>
-
+                                       
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="signin-remember-2">
+                                            <input type="checkbox" {{ $is_remember }} class="custom-control-input" id="signin-remember-2"name="remember_check">
                                             <label class="custom-control-label" for="signin-remember-2">Remember Me</label>
                                         </div><!-- End .custom-checkbox -->
 

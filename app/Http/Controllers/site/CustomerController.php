@@ -33,18 +33,25 @@ class CustomerController extends Controller
 
     public function login(Request $request){
         $request->validate([
-            'singinemail' => 'required',
-            'singinpassword' => 'required'
+            'signinemail' => 'required',
+            'signinpassword' => 'required'
         ]);
 
-        $cutomer_info = Customer::where('customer_email', $request->singinemail)->orWhere('customer_username',$request->singinemail)->first();
+        $cutomer_info = Customer::where('customer_email', $request->signinemail)->orWhere('customer_username',$request->signinemail)->first();
 
         if(!$cutomer_info){
             return back()->with('login_email_error','Email or Username does not match');
         }else{
-            if(Hash::check($request->singinpassword, $cutomer_info->customer_password)){
-                $request->session()->put('LoggedCustomer', $request->singinemail);
-                return redirect('/');
+            if(Hash::check($request->signinpassword, $cutomer_info->customer_password)){
+                $request->session()->put('LoggedCustomer', $request->signinemail);
+
+                if($request->remember_check == null){
+                    setcookie('customer_email',$request->signinemail,time()+10);
+                }else{
+                    setcookie('customer_email', $request->signinemail,time()+60*60*24*30);
+                    return redirect('/');
+                }
+
             }else{
                 return back()->with('password_error','Password is incorrect');
             }
