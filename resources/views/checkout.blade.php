@@ -47,7 +47,7 @@
                                 </div><!-- End .row -->
 
                                 <label>Company Name (Optional)</label>
-                                <input type="text" name="company_name" class="form-control">
+                                <input type="text" name="company_name"  class="form-control">
 
                                 <label>Country *</label>
                                 @error('country') <span style="color: red;">{{ $message }}</span>@enderror

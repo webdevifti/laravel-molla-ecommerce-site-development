@@ -10,7 +10,8 @@ class Customer extends Model
     use HasFactory;
 
     protected $fillable = [
-        'customer_fullname',
+        'customer_firstname',
+        'customer_lastname',
         'customer_username',
         'customer_email',
         'customer_photo',
@@ -23,9 +24,9 @@ class Customer extends Model
     ];
 
 
-    public function relWithBill(){
-        return $this->belongsTo(BillingInfo::class, 'id');
-    }
+    // public function relWithBill(){
+    //     return $this->belongsTo(BillingInfo::class, 'id','customer_id');
+    // }
 
     public function relToOrderPurchase(){
         return $this->hasMany(OrderPurchase::class, 'id');
