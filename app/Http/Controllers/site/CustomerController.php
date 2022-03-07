@@ -4,15 +4,18 @@ namespace App\Http\Controllers\site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRegisterRequest;
+use App\Mail\RegistrationMail;
 use App\Models\BillingInfo;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\OrderDetails;
 use App\Models\OrderPurchase;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -60,19 +63,45 @@ class CustomerController extends Controller
     }
 
     public function register(CustomerRegisterRequest $request){
-        try{
-            Customer::create([
+      
+            $customer = Customer::insertGetId([
                 'customer_username' => $request->customer_username,
                 'customer_email' => $request->customer_email,
-                'customer_password' => Hash::make($request->password)
+                'customer_password' => Hash::make($request->password),
+                'verification_code' => sha1(time()),
+                'created_at' => Carbon::now(),
             ]);
-            $request->session()->put('LoggedCustomer', $request->customer_email);
-            return redirect('/')->with('customer_registered',"Your Registration has been successfully");
-        }catch(Exception $e){
-            return back()->with('customer_registered_fail',"Registration can not be done");
+            // $request->session()->put('LoggedCustomer', $request->customer_email);
+            if($customer){
+                $get_last_customer = Customer::find($customer);
+                $mail_data = [
+                    'email' => $request->customer_email,
+                    'code' => $get_last_customer->verification_code,
+                ];
 
-        }
+                Mail::to($request->customer_email)->send(new RegistrationMail($mail_data));
+                $request->session()->put('LoggedCustomer', $request->customer_email);
+                return redirect('/customer/dashboard')->with('customer_registered',"Your Registration has been successfully");
+            }else{
+
+                return back()->with('customer_registered_fail',"Registration can not be done");
+            }
+
+    
        
+    }
+
+    public function verifyEmail(){
+        $code = request()->query('code');
+        $check_customer = Customer::where('verification_code',$code)->first();
+
+        if($check_customer->verification_code != $code){
+            return 'Unauthorized code';
+        }else{
+            $check_customer->is_verified = 'verified';
+            $check_customer->save();
+            return redirect('/');
+        }
     }
 
     public function customerDashboard(){

@@ -15,6 +15,7 @@ use App\Http\Controllers\site\CustomerController;
 use App\Http\Controllers\site\OrderPurchaseController;
 use App\Http\Controllers\site\ProductDetailsController;
 use App\Http\Controllers\site\WishlistController;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,6 +38,7 @@ Route::get('/search',[HomeController::class, 'search'])->name('product.search');
 // Customer Auth
 Route::post('/customer/auth/registration', [CustomerController::class,'register'])->name('customer.registration');
 Route::post('/customer/auth/login', [CustomerController::class,'login'])->name('customer.login');
+Route::get('/customer/verify/email', [CustomerController::class, 'verifyEmail']);
 
 // Middleware for Authentic Customer 
 Route::group(['middleware' => ['CustomerAuth']], function(){

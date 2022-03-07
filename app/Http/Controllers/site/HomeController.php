@@ -14,8 +14,9 @@ class HomeController extends Controller
 {
     //
     public function index(){
-        $cid = session('LoggedCustomer');
-        $customer = Customer::where('customer_email', $cid)->first();
+      
+            $cid = session('LoggedCustomer');
+            $customer = Customer::where('customer_email', $cid)->first();
         // dd($customer);
         if($customer != null){
             $cart_data = Cart::where('customer_id',$customer->id)->orderBy('created_at','DESC')->get();
@@ -54,7 +55,6 @@ class HomeController extends Controller
 
 
     public function shop(Request $request){
-
         $cid = session('LoggedCustomer');
         $customer = Customer::where('customer_email', $cid)->first();
         // dd($customer);
