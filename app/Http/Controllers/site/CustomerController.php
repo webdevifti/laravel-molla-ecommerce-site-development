@@ -53,8 +53,8 @@ class CustomerController extends Controller
                     setcookie('customer_email',$request->signinemail,time()+10);
                 }else{
                     setcookie('customer_email', $request->signinemail,time()+60*60*24*30);
-                    return redirect('/');
                 }
+                return redirect('/');
 
             }else{
                 return back()->with('password_error','Password is incorrect');
@@ -137,7 +137,6 @@ class CustomerController extends Controller
         $request->validate([
             'first_name' => 'string|max:255',
             'last_name' => 'string|max:255',
-            'user_name' => 'string|max:255',
             'phone_number' => 'required|max:11'
         ]);
 
@@ -145,7 +144,6 @@ class CustomerController extends Controller
         // dd($customer);
         $customer->customer_firstname = $request->first_name;
         $customer->customer_lastname = $request->last_name;
-        $customer->customer_username = $request->user_name;
         $customer->customer_phone_number = $request->phone_number;
         $customer->save();
 

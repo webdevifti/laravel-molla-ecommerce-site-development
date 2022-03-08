@@ -176,7 +176,7 @@
                                         </div><!-- End .row -->
 
                                         <label>Display Name *</label>
-                                        <input type="text" value="{{ $customer->customer_username }}" class="form-control" name="user_name" required>
+                                        <input type="text" readonly value="{{ $customer->customer_username }}" class="form-control" name="user_name" required>
                                         <small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
                                         @error('user_name') <span style="color: red">{{ $message }}</span>@enderror
 
