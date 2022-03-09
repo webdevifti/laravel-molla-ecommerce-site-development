@@ -67,7 +67,7 @@
                                 </div><!-- .End .tab-pane -->
 
                                 <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
-                                    @if($orders->count() != 0)
+                                    @if($orderPurchase->count() != 0)
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -77,16 +77,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($orders as $order)
+                                            @foreach($orderPurchase as $order)
                                             <tr>
                                                 {{-- <td>{{ $order->relWithBillInfo->customer_company_name }}</td> --}}
                                                 <td>{{ $order->id }}</td>
                                                 <td>{{ $order->payment_type }}</td>
                                                 <td>
                                                     <a class="btn btn-info" href="#orderdetailmodal{{ $order->id }}"  data-toggle="modal" >View Details</a>
-                                                    <a href="" class="btn btn-success">Download Invoice</a>
+                                                    <a href="{{ route('download.pdf') }}" class="btn btn-success">Download Invoice</a>
                                                 </td>
                                             </tr>
+                                            {{ $order->id }}
                                             <div class="modal fade" id="orderdetailmodal{{ $order->id }}" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" style="max-width: 80% !important" role="document">
                                                     <div class="modal-content">
@@ -97,6 +98,7 @@
 
                                                             <div style="padding: 10px;">
                                                                 @foreach($orderDetails as $od)
+                                                                
                                                                 <div style="width: 100%; display:flex;align-items:center;justify-content:space-between">
                                                                 <p><img style="width: 100px;height: 100px;object-fit:cover" src="{{ asset('uploads/products/previews/'. $od->rel_to_product->product_preview_img) }}" alt=""></p>
                                                                 <p>{{ $od->rel_to_product->product_title }}</p>
@@ -104,6 +106,7 @@
                                                                 <p>{{ $od->rel_to_product->selling_price }}</p>
                                                                 <p>Sub Total: {{ $od->qty*$od->rel_to_product->selling_price }}</p>
                                                                 </div>
+                                                                 
                                                                 @endforeach
                                                             </div>
                                                            
@@ -111,6 +114,7 @@
                                                     </div><!-- End .modal-content -->
                                                 </div><!-- End .modal-dialog -->
                                             </div><!-- End .modal -->
+                                           
                                             @endforeach
                                         </tbody>
                                     </table>

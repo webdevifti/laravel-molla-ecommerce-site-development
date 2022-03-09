@@ -24,11 +24,11 @@ class Customer extends Model
     ];
 
 
-    // public function relWithBill(){
-    //     return $this->belongsTo(BillingInfo::class, 'id','customer_id');
-    // }
+    public function relWithBill(){
+        return $this->belongsTo(BillingInfo::class,'customer_id');
+    }
 
     public function relToOrderPurchase(){
-        return $this->hasMany(OrderPurchase::class, 'id');
+        return $this->belongsTo(OrderPurchase::class, 'id');
     }
 }

@@ -11,9 +11,9 @@ class BillingInfo extends Model
 
     protected $guarded = [];
 
-    // public function relWithCustomer(){
-    //     return $this->belongsTo(Customer::class, 'id');
-    // }
+    public function relWithCustomer(){
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
 
     public function relWithOrder(){
         return $this->hasMany(OrderPurchase::class, 'id');

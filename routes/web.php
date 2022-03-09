@@ -39,6 +39,7 @@ Route::get('/search',[HomeController::class, 'search'])->name('product.search');
 Route::post('/customer/auth/registration', [CustomerController::class,'register'])->name('customer.registration');
 Route::post('/customer/auth/login', [CustomerController::class,'login'])->name('customer.login');
 Route::get('/customer/verify/email', [CustomerController::class, 'verifyEmail']);
+Route::get('/customer/order/downaload',[OrderPurchaseController::class, 'getDownload'])->name('download.pdf');
 
 // Middleware for Authentic Customer 
 Route::group(['middleware' => ['CustomerAuth']], function(){

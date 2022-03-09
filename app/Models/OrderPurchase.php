@@ -11,8 +11,8 @@ class OrderPurchase extends Model
 
     protected $guarded = [];
 
-    public function relWithCustomer(){
-        return $this->belongsTo(Customer::class, 'customer_id');
+    public function WithCustomer(){
+        return $this->hasMany(Customer::class, 'customer_id');
     }
     public function relWithBillInfo(){
         return $this->belongsTo(BillingInfo::class, 'billing_id');

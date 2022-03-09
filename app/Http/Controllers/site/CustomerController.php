@@ -115,9 +115,12 @@ class CustomerController extends Controller
         }else{
             $cart_data = [];
         }
-        $orders = OrderPurchase::where('customer_id',$customer->id)->get();
+        $orderPurchase = OrderPurchase::where('customer_id',$customer->id)->get();
+        
         $orderDetails = OrderDetails::where('customer_id', $customer->id)->get();
-        return view('dashboard', compact('get_all_cats','customer','cart_data','orders','orderDetails'));
+        
+        // dd($orderDetails);
+        return view('dashboard', compact('get_all_cats','customer','cart_data','orderPurchase','orderDetails'));
     }
 
     public function getLoggedCustomer(){

@@ -20,6 +20,9 @@
     <div class="page-content">
         <div class="checkout">
             <div class="container">
+                @if(session()->has('order_error'))
+                    <div class="alert alert-danger">{{ session()->get('order_error') }}</div>
+                @endif
                 <div class="checkout-discount">
                     <form action="#">
                         <input type="text" class="form-control" required id="checkout-discount-input">
