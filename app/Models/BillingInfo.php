@@ -16,6 +16,6 @@ class BillingInfo extends Model
     }
 
     public function relWithOrder(){
-        return $this->hasMany(OrderPurchase::class, 'id');
+        return $this->belongsTo(OrderPurchase::class, 'id');
     }
 }

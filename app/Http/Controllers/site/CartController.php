@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Customer;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\Constraint\Count;
 
@@ -38,13 +39,14 @@ class CartController extends Controller
                     'error_to_cart' => 'This product is already in the cart'
                 ]);
             }else{
+               
                 $add_cart = Cart::create([
                     'product_id' => $request->product_id,
                     'customer_id' => $get_customer->id,
                     'qty' => $request->product_qty
                 ]);
                 if($add_cart){
-                   
+                    
                     return response()->json([
                         'added_to_cart' =>'Product added to your cart',
                         'cart_div' =>  $this->getCartproduct(),

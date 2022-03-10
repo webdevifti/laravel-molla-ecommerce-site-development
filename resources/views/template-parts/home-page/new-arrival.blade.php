@@ -52,17 +52,27 @@
                 @foreach($new_arrivals_products as $allproduct)
                 <div class="product product-2">
                     <figure class="product-media">
+                        @if($allproduct->quantity < 1)
+                        <span style="background: red;color: #fff;font-size: 12px" class="product-label label-circle label-top">Out of stock</span>
+                        @else
                         <span class="product-label label-circle label-top">Off {{ $allproduct->discount }}%</span>
+                       
+                        @endif
                         <a href="{{ route('product.detail', $allproduct->product_slug) }}">
                             <img src="{{ asset('uploads/products/previews/'.$allproduct->product_preview_img) }}" alt="Product image" class="product-image">
                         </a>
 
                         <div class="product-action-vertical">
+                            
                             <a href="javascript:void(0)" onclick="addtowishlist('{{ $allproduct->id }}')" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
                         </div><!-- End .product-action -->
 
                         <div class="product-action">
+                            @if($allproduct->quantity < 1)
+                                
+                            @else 
                             <button onclick="addtocart('{{ $allproduct->id }}','{{ (session('LoggedCustomer')) ? $customer->id : '' }}')" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></button>
+                            @endif
                             {{-- <a href="{{ asset('site_assets/popup/quickView.html') }}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a> --}}
                         </div><!-- End .product-action -->
                     </figure><!-- End .product-media -->

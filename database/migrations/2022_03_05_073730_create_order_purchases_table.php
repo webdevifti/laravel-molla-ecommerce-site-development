@@ -16,9 +16,12 @@ return new class extends Migration
         Schema::create('order_purchases', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id');
+            $table->string('orderTrackingID');
+            $table->string('invoiceID');
             $table->integer('billing_id');
-            // $table->integer('cart_id');
-            $table->string('payment_type');
+            $table->integer('grand_total');
+            $table->string('payment_method');
+            $table->string('payment_status');
             $table->timestamps();
         });
     }

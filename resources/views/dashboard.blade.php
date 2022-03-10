@@ -72,7 +72,10 @@
                                         <thead>
                                             <tr>
                                                 <th>Order ID</th>
+                                                <th>Invoice ID</th>
                                                 <th>Payment Method</th>
+                                                <th>Payment Status</th>
+                                                <th>Grand Total</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -80,14 +83,16 @@
                                             @foreach($orderPurchase as $order)
                                             <tr>
                                                 {{-- <td>{{ $order->relWithBillInfo->customer_company_name }}</td> --}}
-                                                <td>{{ $order->id }}</td>
-                                                <td>{{ $order->payment_type }}</td>
+                                                <td>{{ $order->orderTrackingID }}</td>
+                                                <td>{{ $order->invoiceID }}</td>
+                                                <td>{{ ($order->payment_method == 'cod' ? 'Cash on Delivery': $order->payment_method) }}</td>
+                                                <td>{{ $order->payment_status }}</td>
+                                                <td>BDT: {{ $order->grand_total }}</td>
                                                 <td>
                                                     <a class="btn btn-info" href="#orderdetailmodal{{ $order->id }}"  data-toggle="modal" >View Details</a>
                                                     <a href="{{ route('download.pdf') }}" class="btn btn-success">Download Invoice</a>
                                                 </td>
                                             </tr>
-                                            {{ $order->id }}
                                             <div class="modal fade" id="orderdetailmodal{{ $order->id }}" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" style="max-width: 80% !important" role="document">
                                                     <div class="modal-content">

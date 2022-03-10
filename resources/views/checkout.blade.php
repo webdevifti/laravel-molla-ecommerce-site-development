@@ -145,6 +145,7 @@
                                         <tr class="summary-total">
                                             <td>Total:</td>
                                             <td>BDT {{ $cart_total }}</td>
+                                            <input type="hidden" name="grand_total" value="{{ $cart_total }}">
                                         </tr><!-- End .summary-total -->
                                     </tbody>
                                 </table><!-- End .table table-summary -->

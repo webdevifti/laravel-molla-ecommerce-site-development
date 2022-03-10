@@ -9,12 +9,13 @@ use App\Models\Cart;
 use App\Models\Customer;
 use App\Models\OrderDetails;
 use App\Models\OrderPurchase;
+use App\Models\Product;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 class OrderPurchaseController extends Controller
 {
     //
@@ -56,8 +57,12 @@ class OrderPurchaseController extends Controller
             if($billing){
                 $orderPurchase = OrderPurchase::insertGetId([
                     'customer_id' => $customer,
+                    'orderTrackingID' => '#'.rand(11111111,99999999),
+                    'invoiceID' => rand(11,99).'-'.rand(11,99).'-'.rand(11,99),
                     'billing_id' => $billing,
-                    'payment_type' => $request->payment_method,
+                    'payment_method' => $request->payment_method,
+                    'payment_status' => 'pending',
+                    'grand_total' => $request->grand_total,
                     'created_at' => Carbon::now(),
                 ]);
                 if($orderPurchase){
@@ -80,16 +85,11 @@ class OrderPurchaseController extends Controller
                     $last_billing = BillingInfo::find($billing);
                     // dd($last_billing->relWithCustomer->customer_lastname);
                     $order_detail = OrderDetails::where('customer_id', $customer)->where('order_purchase_id', $orderPurchase)->get();
-                    
-                    $mail = Mail::to($request->email)->send(new OrderInvoiceMail($order_detail,$last_billing));
-
-                    if($mail){
-
-                        $pdf = PDF::loadView('invoice.invoice', compact('last_billing','order_detail'))->setPaper('a4', 'landscape')->setWarnings(false)->save('/download/customer_order_invoice.pdf')->stream();
-                        return $pdf;
+                    foreach($cart_customer_id as $cart_item){
+                        Product::where('id', $cart_item->product_id)->decrement('quantity',$cart_item->qty);
                     }
-                
-
+                     Mail::to($request->email)->send(new OrderInvoiceMail($order_detail,$last_billing));
+ 
                     return redirect('/customer/dashboard')->with('orderDone','Your Order has been placed successfully.');
                 }
             }else{

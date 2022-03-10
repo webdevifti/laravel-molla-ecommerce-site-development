@@ -151,7 +151,7 @@ footer {
         <div id="logo">
           <img src="logo.png">
         </div>
-        <h1>INVOICE 3-2-1</h1>
+        <h1>INVOICE {{ $last_billing->relWithOrder->invoiceID }}</h1>
         <div id="company" class="clearfix">
           <div>Company Name</div>
           <div>455 Foggy Heights,<br /> AZ 85004, US</div>

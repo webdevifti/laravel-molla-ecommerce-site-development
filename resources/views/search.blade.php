@@ -61,7 +61,11 @@
                                 </div><!-- End .product-action -->
 
                                 <div class="product-action action-icon-top">
+                                    @if($item->quantity < 1)
+                                        <span style="color: red">Out of Stock</span>
+                                    @else
                                     <button onclick="addtocart('{{ $item->id }}','{{ (session('LoggedCustomer')) ? $customer->id : '' }}')" class="btn-product btn-cart"><span>add to cart</span></button>
+                                    @endif
                                     {{-- <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                     <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a> --}}
                                 </div><!-- End .product-action -->
