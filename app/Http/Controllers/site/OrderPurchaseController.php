@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\OrderInvoiceMail;
 use App\Models\BillingInfo;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Customer;
 use App\Models\OrderDetails;
 use App\Models\OrderPurchase;
@@ -16,6 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class OrderPurchaseController extends Controller
 {
     //
@@ -96,6 +99,26 @@ class OrderPurchaseController extends Controller
                 return back()->with('order_error','Order Can not complete');
             }
        
+    }
+
+    public function applyCoupon(Request $request){
+        $coupon = Coupon::where('coupon_name', $request->coupon_value)->first();
+
+        if($coupon != null){
+            if($coupon->coupon_expire < Carbon::now()){
+                return response()->json([
+                    'not_applied' => 'Coupon code has been expired.'
+                ]);
+            }else{
+                return response()->json([
+                    'applied' => 'Coupon Applied successfully.'
+                ]);
+            }
+        }else{
+            return response()->json([
+                'not_applied' => 'Invalid coupon code.'
+            ]);
+        }
     }
 
     // public function getDownload()

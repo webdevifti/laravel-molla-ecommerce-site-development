@@ -24,10 +24,9 @@
                     <div class="alert alert-danger">{{ session()->get('order_error') }}</div>
                 @endif
                 <div class="checkout-discount">
-                    <form action="#">
-                        <input type="text" class="form-control" required id="checkout-discount-input">
-                        <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
-                    </form>
+                    <input type="text" placeholder="Have a Coupon code? Enter your coupon code" class="form-control" required onchange="ApplyCoupon(this.value)">
+                    <p style="color: green" class="coupon_applied"></p>
+                    <p style="color: red" class="coupon_not_applied"></p>
                 </div><!-- End .checkout-discount -->
                 <form action="{{ route('customer.order.process') }}" method="POST">
                     @csrf
@@ -100,10 +99,11 @@
                                 </div><!-- End .custom-checkbox --> --}}
 
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
+                                    <input name="my_checkbox" type="checkbox" class="custom-control-input" id="checkout-diff-address">
                                     <label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
                                 </div><!-- End .custom-checkbox -->
 
+                                <div id="shipToDiffAdd"></div>
                                 <label>Order notes (optional)</label>
                                 <textarea class="form-control" name="order_notes" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
                                 
@@ -172,6 +172,56 @@
         </div><!-- End .checkout -->
     </div><!-- End .page-content -->
 </main><!-- End .main -->
+@endsection
+
+@section('site_footer')
+{{-- <script>
+    var div = $('#shipToDiffAdd');
+    var html = '<div class="as"><p id="closeDiv">lorem</p></div>';
+    var closeDiv = $('#closeDiv');
+   $(function()
+    {
+      $('[name="my_checkbox"]').change(function()
+      {
+        if ($(this).is(':checked')) {
+            div.append(html);
+        }else{
+            div.remove(html);
+        }
+      });
+    });
+</script> --}}
+
+<script>
+    function ApplyCoupon(value){
+        var a = $('.coupon_applied');
+        var b = $('.coupon_not_applied');
+        $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+        $.ajax({
+            type:'POST',
+            url:'/coupon/apply',
+            data:{coupon_value: value},
+            success:function(data){
+                if(data.applied){
+                    $('.coupon_applied').html(data.applied);
+                    console.log(data.applied);
+                }else{
+                    b.html('');
+                }
+                if(data.not_applied){
+                    $('.coupon_not_applied').html(data.not_applied);
+                }else{
+                    a.html('');
+                }
+            }
+        });
+    }
+</script>
 @endsection
         
 
