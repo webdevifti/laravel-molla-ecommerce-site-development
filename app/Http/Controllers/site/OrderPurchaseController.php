@@ -102,22 +102,16 @@ class OrderPurchaseController extends Controller
     }
 
     public function applyCoupon(Request $request){
-        $coupon = Coupon::where('coupon_name', $request->coupon_value)->first();
+        $coupon = Coupon::where('coupon_name', $request->coupon_code)->first();
 
         if($coupon != null){
             if($coupon->coupon_expire < Carbon::now()){
-                return response()->json([
-                    'not_applied' => 'Coupon code has been expired.'
-                ]);
+                return back()->with('expire_coupon','Coupon Code Expired');
             }else{
-                return response()->json([
-                    'applied' => 'Coupon Applied successfully.'
-                ]);
+                
             }
         }else{
-            return response()->json([
-                'not_applied' => 'Invalid coupon code.'
-            ]);
+            return back()->with('invalid_coupon','Invalid Coupon Code');
         }
     }
 

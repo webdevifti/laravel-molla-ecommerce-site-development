@@ -58,7 +58,7 @@ Route::group(['middleware' => ['CustomerAuth']], function(){
     Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout');
 
     Route::post('/customer/order/process',[OrderPurchaseController::class, 'OrderPurchase'])->name('customer.order.process');
-    Route::post('/coupon/apply', [OrderPurchaseController::class, 'applyCoupon']);
+    Route::post('/coupon/apply', [OrderPurchaseController::class, 'applyCoupon'])->name('apply.coupon');
 
     //Customer Profile / Account Setting
     Route::post('/customer/profile/update/{id}', [CustomerController::class, 'accountUpdate'])->name('customer.profile.update');

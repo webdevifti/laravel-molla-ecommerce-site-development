@@ -24,9 +24,21 @@
                     <div class="alert alert-danger">{{ session()->get('order_error') }}</div>
                 @endif
                 <div class="checkout-discount">
-                    <input type="text" placeholder="Have a Coupon code? Enter your coupon code" class="form-control" required onchange="ApplyCoupon(this.value)">
-                    <p style="color: green" class="coupon_applied"></p>
-                    <p style="color: red" class="coupon_not_applied"></p>
+                    @if(session()->has('expire_coupon'))
+                        <div class="alert alert-danger">{{ session()->get('expire_coupon') }}</div>
+                    @endif
+                    @if(session()->has('invalid_coupon'))
+                        <div class="alert alert-danger">{{ session()->get('invalid_coupon') }}</div>
+                    @endif
+                    @if(session()->has('coupon_applied'))
+                        <div class="alert alert-success">{{ session()->get('coupon_applied') }}</div>
+                    @endif
+                    <form action="{{ route('apply.coupon') }}" method="POST">
+                        @csrf
+                        <input type="text" placeholder="Have a Coupon code? Enter your coupon code" class="form-control" required name="coupon_code" value="{{ old('coupon_code') }}">
+                        <button class="btn btn-primary">Apply Coupon</button>
+                    </form>
+                    
                 </div><!-- End .checkout-discount -->
                 <form action="{{ route('customer.order.process') }}" method="POST">
                     @csrf
@@ -142,11 +154,28 @@
                                             <td>Shipping:</td>
                                             <td>Free shipping</td>
                                         </tr>
+                                        @if(isset($couponName))
+
+                                        <tr>
+                                            <td>Coupon Code:</td>
+                                            <td>{{ $couponName }}</td>
+                                        </tr>
+                                        <tr class="summary-total">
+                                            @php
+                                                $after_coupon = ($coupon_value / 100) * $cart_total;
+                                            @endphp
+                                            <td>Total:</td>
+                                            <td>BDT: {{  $after_coupon }}</td>
+                                            <input type="hidden" name="grand_total" value="{{ $after_coupon }}">
+                                        </tr><!-- End .summary-total -->
+                                        @else
+
                                         <tr class="summary-total">
                                             <td>Total:</td>
                                             <td>BDT {{ $cart_total }}</td>
                                             <input type="hidden" name="grand_total" value="{{ $cart_total }}">
                                         </tr><!-- End .summary-total -->
+                                        @endif
                                     </tbody>
                                 </table><!-- End .table table-summary -->
 
@@ -174,55 +203,6 @@
 </main><!-- End .main -->
 @endsection
 
-@section('site_footer')
-{{-- <script>
-    var div = $('#shipToDiffAdd');
-    var html = '<div class="as"><p id="closeDiv">lorem</p></div>';
-    var closeDiv = $('#closeDiv');
-   $(function()
-    {
-      $('[name="my_checkbox"]').change(function()
-      {
-        if ($(this).is(':checked')) {
-            div.append(html);
-        }else{
-            div.remove(html);
-        }
-      });
-    });
-</script> --}}
-
-<script>
-    function ApplyCoupon(value){
-        var a = $('.coupon_applied');
-        var b = $('.coupon_not_applied');
-        $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-        $.ajax({
-            type:'POST',
-            url:'/coupon/apply',
-            data:{coupon_value: value},
-            success:function(data){
-                if(data.applied){
-                    $('.coupon_applied').html(data.applied);
-                    console.log(data.applied);
-                }else{
-                    b.html('');
-                }
-                if(data.not_applied){
-                    $('.coupon_not_applied').html(data.not_applied);
-                }else{
-                    a.html('');
-                }
-            }
-        });
-    }
-</script>
-@endsection
         
 
      
