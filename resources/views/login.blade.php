@@ -90,7 +90,7 @@
                                             </a>
                                         </div><!-- End .col-6 -->
                                         <div class="col-sm-6">
-                                            <a href="#" class="btn btn-login btn-f">
+                                            <a href="{{ route('facebook.login') }}" class="btn btn-login btn-f">
                                                 <i class="icon-facebook-f"></i>
                                                 Login With Facebook
                                             </a>
@@ -146,7 +146,7 @@
                                             </a>
                                         </div><!-- End .col-6 -->
                                         <div class="col-sm-6">
-                                            <a href="#" class="btn btn-login  btn-f">
+                                            <a href="{{ route('facebook.login') }}" class="btn btn-login  btn-f">
                                                 <i class="icon-facebook-f"></i>
                                                 Login With Facebook
                                             </a>

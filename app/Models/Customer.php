@@ -9,19 +9,7 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'customer_firstname',
-        'customer_lastname',
-        'customer_username',
-        'customer_email',
-        'customer_photo',
-        'customer_password',
-        'customer_phone_number',
-        'customer_status',
-        'customer_address',
-        'customer_zipcode',
-        'is_verified'
-    ];
+    protected $guarded = [];
 
 
     public function relWithBill(){

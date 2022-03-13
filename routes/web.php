@@ -15,6 +15,7 @@ use App\Http\Controllers\site\CustomerController;
 use App\Http\Controllers\site\OrderPurchaseController;
 use App\Http\Controllers\site\ProductDetailsController;
 use App\Http\Controllers\site\WishlistController;
+use App\Http\Controllers\SocialLoginController;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,13 @@ Route::post('/customer/auth/registration', [CustomerController::class,'register'
 Route::post('/customer/auth/login', [CustomerController::class,'login'])->name('customer.login');
 Route::get('/customer/verify/email', [CustomerController::class, 'verifyEmail']);
 Route::get('/customer/order/downaload',[OrderPurchaseController::class, 'getDownload'])->name('download.pdf');
+
+//  Facebook Login
+Route::get('/customer/login/facebook', [SocialLoginController::class, 'facebookRedirect'])->name('facebook.login');
+Route::get('/customer/login/facebook/callback', [SocialLoginController::class, 'loginWithFacebook']);
+//
+
+
 
 // Middleware for Authentic Customer 
 Route::group(['middleware' => ['CustomerAuth']], function(){
