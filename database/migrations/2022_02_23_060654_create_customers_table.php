@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('customer_phone_number')->nullable();
             $table->string('customer_status')->default('1');
             $table->string('verification_code');
-            $table->integer('social_login_id')->nullable();
+            $table->string('social_login_id')->nullable();
             $table->string('is_verified')->default('not_verified');
             $table->timestamps();
         });

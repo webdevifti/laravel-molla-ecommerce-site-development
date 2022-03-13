@@ -47,6 +47,11 @@ Route::get('/customer/login/facebook', [SocialLoginController::class, 'facebookR
 Route::get('/customer/login/facebook/callback', [SocialLoginController::class, 'loginWithFacebook']);
 //
 
+//  Facebook Login
+Route::get('/customer/login/google', [SocialLoginController::class, 'googleRedirect'])->name('google.login');
+Route::get('/customer/login/google/callback', [SocialLoginController::class, 'loginWithGoogle']);
+//
+
 
 
 // Middleware for Authentic Customer 

@@ -39,11 +39,36 @@ class SocialLoginController extends Controller
                 return redirect('/customer/auth');
             }
         }
-        // if($findCustomer != null){
-        //     session()->put('LoggedCustomer', $user->email);
-        //     redirect('/');
-        // }else{
-        //     redirect('/');
-        // }
+    }
+
+    public function googleRedirect(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function loginWithGoogle(){
+        $user = Socialite::driver('google')->stateless()->user();
+        // dd($user);
+        // dd($user);
+        $findCustomer = Customer::where('social_login_id',$user->id)->first();
+        // dd($findCustomer);
+        if($findCustomer != null){
+            session()->put('LoggedCustomer', $user->email);
+            return redirect('/');
+        }else{
+            $customer = Customer::insert([
+                'customer_username' => $user->name,
+                'customer_email' => $user->email,
+                'customer_password' => '1234567890',
+                'verification_code' => sha1(time()),
+                'social_login_id' => $user->id,
+                'created_at' => Carbon::now(),
+            ]);
+            if($customer){
+                session()->put('LoggedCustomer', $user->email);
+                return redirect('/');
+            }else{
+                return redirect('/customer/auth');
+            }
+        }
     }
 }
