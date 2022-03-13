@@ -32,7 +32,7 @@ return [
 
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
-        'client_secret' => env('FACEBOOK_SECRET'),
+        'client_secret' => env('FACEBOOK_SECRET_KEY'),
         'redirect' => 'http://localhost:8000/customer/login/facebook/callback'
     ],
     'google' => [
