@@ -16,6 +16,7 @@ use App\Http\Controllers\site\OrderPurchaseController;
 use App\Http\Controllers\site\ProductDetailsController;
 use App\Http\Controllers\site\WishlistController;
 use App\Http\Controllers\SocialLoginController;
+use App\Http\Controllers\SslCommerzPaymentController;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,9 @@ Route::get('/customer/login/google/callback', [SocialLoginController::class, 'lo
 
 
 
+
+
+
 // Middleware for Authentic Customer 
 Route::group(['middleware' => ['CustomerAuth']], function(){
     Route::get('/customer/auth', [CustomerController::class,'index'])->name('customer.auth');
@@ -69,6 +73,20 @@ Route::group(['middleware' => ['CustomerAuth']], function(){
     Route::post('/cart/decrement',[CartController::class, 'decrement']);
     Route::post('/cart/delete',[CartController::class, 'delete']);
     Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout');
+    
+    // SSLCOMMERZ Start
+    // Route::get('/checkout', [SslCommerzPaymentController::class, 'exampleEasyCheckout'])->name('checkout');
+    // Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+    Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+    Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+    Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+    Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+    Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+    Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+    //SSLCOMMERZ END
 
     Route::post('/customer/order/process',[OrderPurchaseController::class, 'OrderPurchase'])->name('customer.order.process');
     Route::post('/coupon/apply', [OrderPurchaseController::class, 'applyCoupon'])->name('apply.coupon');

@@ -37,7 +37,12 @@ class OrderPurchaseController extends Controller
             'payment_method' => 'required'
         ]);
 
-        
+        if($request->payment_method == 'ssl_commerce'){
+            // return redirect('/pay-via-ajax');
+            // dd($request->all());
+           $payable_total =  $request->grand_total;
+            return view('exampleHosted',['payable_total' => $payable_total]);
+        }else{
         
             $customer = $request->customer_id;
             Customer::find($customer)->update([
@@ -98,7 +103,7 @@ class OrderPurchaseController extends Controller
             }else{
                 return back()->with('order_error','Order Can not complete');
             }
-       
+        }
     }
 
     public function applyCoupon(Request $request){

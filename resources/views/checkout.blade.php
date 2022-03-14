@@ -184,11 +184,17 @@
                                 <label for="cod">
                                     <input type="radio" value="cod" name="payment_method" id="cod" style="margin-right: 10px;">Cash on delivery
                                 </label>
+                                <br>
                                 <label for="brn">
-                                    <input type="radio" value="mobile banking" name="payment_method" id="brn" style="margin-right: 10px;">bKash/Rocket/Nagad
+                                    <input type="radio" value="ssl_commerce" name="payment_method" id="brn" style="margin-right: 10px;">sslCommerce
                                 </label>
                                 </div>
-
+                                {{-- <button class="btn btn-primary btn-lg btn-block" id="sslczPayBtn"
+                                token="if you have any token validation"
+                                postdata="your javascript arrays or objects which requires in backend"
+                                order="If you already have the transaction generated for current order"
+                                endpoint="{{ url('/pay-via-ajax') }}"> Place Order
+                        </button> --}}
                                 <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
                                     <span class="btn-text">Place Order</span>
                                     <span class="btn-hover-text">Proceed to Checkout</span>
@@ -205,4 +211,26 @@
 
         
 
-     
+     @section('site_footer')
+     {{-- <script>
+        var obj = {};
+        obj.cus_name = $('#customer_name').val();
+        obj.cus_phone = $('#mobile').val();
+        obj.cus_email = $('#email').val();
+        obj.cus_addr1 = $('#address').val();
+        obj.amount = $('#total_amount').val();
+    
+        $('#sslczPayBtn').prop('postdata', obj);
+    
+        (function (window, document) {
+            var loader = function () {
+                var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+                // script.src = "https://seamless-epay.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR LIVE
+                script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7); // USE THIS FOR SANDBOX
+                tag.parentNode.insertBefore(script, tag);
+            };
+    
+            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+        })(window, document);
+    </script> --}}
+     @endsection

@@ -58,6 +58,7 @@ class SocialLoginController extends Controller
             $customer = Customer::insert([
                 'customer_username' => $user->name,
                 'customer_email' => $user->email,
+                // 'customer_phone_number' => $user->phone_number,
                 'customer_password' => '1234567890',
                 'verification_code' => sha1(time()),
                 'social_login_id' => $user->id,
