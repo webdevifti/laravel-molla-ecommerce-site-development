@@ -22,6 +22,9 @@
         @if(session()->has('orderDone'))
             <p style="color: #fff;text-align:center;font-size: 21px;background: green;">{{ session()->get('orderDone') }}</p>
         @endif
+        @if(session()->has('pass_changed'))
+            <p style="color: #fff;text-align:center;font-size: 21px;background: green;">{{ session()->get('pass_changed') }}</p>
+        @endif
         <div class="page-content">
             <div class="dashboard">
                 <div class="container">
@@ -199,13 +202,17 @@
 
                                         <label>Current password (leave blank to leave unchanged)</label>
                                         <input type="password" name="current_pass" class="form-control">
-
+                                        @if(session()->has('current_pass_not_match'))
+                                            <p style="color: red">{{ session()->get('current_pass_not_match') }}</p>
+                                        @endif
                                         <label>New password (leave blank to leave unchanged)</label>
                                         <input type="password" name="new_password" class="form-control">
 
                                         <label>Confirm new password</label>
                                         <input type="password" name="confirm_new_pass" class="form-control mb-2">
-
+                                        @if(session()->has('both_pass_not_macth'))
+                                            <p style="color: red">{{ session()->get('both_pass_not_macth') }}</p>
+                                        @endif
                                         <button type="submit" class="btn btn-outline-primary-2">
                                             <span>SAVE CHANGES</span>
                                             <i class="icon-long-arrow-right"></i>

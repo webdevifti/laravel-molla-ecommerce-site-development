@@ -143,13 +143,32 @@ class CustomerController extends Controller
             'phone_number' => 'required|max:11'
         ]);
 
-        $customer = Customer::find($id);
-        // dd($customer);
-        $customer->customer_firstname = $request->first_name;
-        $customer->customer_lastname = $request->last_name;
-        $customer->customer_phone_number = $request->phone_number;
-        $customer->save();
 
-        return back()->with('updated','Save Changed');
+        $customer = Customer::find($id);
+        if($request->current_pass){
+            if(Hash::check($request->current_pass, $customer->customer_password)){
+                if($request->new_password != $request->confirm_new_pass){
+                    return back()->with('both_pass_not_macth','Both Password not matching');
+                }else{
+                    $customer->customer_password = Hash::make($request->new_password);
+                    $customer->save();
+
+                    return back()->with('pass_changed','Password has been changed');
+                }
+            }else{
+                return back()->with('current_pass_not_match','Your Current Password not matching');
+            }
+    
+        }else{
+
+            // dd($customer);
+            $customer->customer_firstname = $request->first_name;
+            $customer->customer_lastname = $request->last_name;
+            $customer->customer_phone_number = $request->phone_number;
+            $customer->save();
+    
+            return back()->with('updated','Save Changed');
+        }
+
     }
 }

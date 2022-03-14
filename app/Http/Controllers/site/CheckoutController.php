@@ -21,9 +21,15 @@ class CheckoutController extends Controller
             
         }else{
             $cart_data = [];
+            
         }
-        $get_all_cats = Category::where('status',1)->withoutTrashed()->get();
-        return view('checkout', compact('cart_data','get_all_cats','customer'));
+        if($cart_data->count() == 0){
+            return redirect('/cart');
+        }else{
+
+            $get_all_cats = Category::where('status',1)->withoutTrashed()->get();
+            return view('checkout', compact('cart_data','get_all_cats','customer'));
+        }
     }
 
 

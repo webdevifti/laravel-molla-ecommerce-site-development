@@ -38,8 +38,6 @@ class OrderPurchaseController extends Controller
         ]);
 
         if($request->payment_method == 'ssl_commerce'){
-            // return redirect('/pay-via-ajax');
-            // dd($request->all());
            $payable_total =  $request->grand_total;
             return view('exampleHosted',['payable_total' => $payable_total]);
         }else{
