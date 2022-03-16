@@ -39,7 +39,23 @@ class OrderPurchaseController extends Controller
 
         if($request->payment_method == 'ssl_commerce'){
            $payable_total =  $request->grand_total;
-            return view('exampleHosted',['payable_total' => $payable_total]);
+           $arr = array();
+           $arr['customer'] = $request->customer_id;;
+           $arr['firstname'] = $request->firstname;
+           $arr['last_name'] = $request->lastname;
+           $arr['company'] = $request->company_name;
+           $arr['order_notes'] = $request->order_notes;
+           $arr['country'] = $request->country;
+           $arr['street'] = $request->street;
+           $arr['appartment'] = $request->appartment;
+           $arr['city'] = $request->city;
+           $arr['state'] = $request->state;
+           $arr['zip'] = $request->zip;
+           $arr['phone_number'] = $request->phone_number;
+           $arr['email'] = $request->email;
+           $arr['grand_total'] = $request->grand_total;
+           $arr['payment_method'] = $request->payment_method;
+            return view('exampleHosted',['payable_total' => $payable_total, 'arr' => $arr]);
         }else{
         
             $customer = $request->customer_id;

@@ -4,7 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Library\SslCommerz\SslCommerzNotification;
+use App\Mail\OrderInvoiceMail;
+use App\Models\BillingInfo;
+use App\Models\Cart;
+use App\Models\Customer;
+use App\Models\OrderDetails;
+use App\Models\OrderPurchase;
+use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class SslCommerzPaymentController extends Controller
 {
@@ -76,6 +85,8 @@ class SslCommerzPaymentController extends Controller
                 'transaction_id' => $post_data['tran_id'],
                 'currency' => $post_data['currency']
             ]);
+        
+            
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
@@ -85,6 +96,68 @@ class SslCommerzPaymentController extends Controller
             print_r($payment_options);
             $payment_options = array();
         }
+
+        // if($payment_options){
+        //     $customer = $request->customer;
+        //         Customer::find($customer)->update([
+        //             'customer_firstname' => $request->firstname,
+        //             'customer_lastname' => $request->lastname,
+        //             'customer_phone_number' => $request->phone_number
+        //         ]);
+        //         $billing = BillingInfo::insertGetId([
+        //             'customer_id' => $customer,
+        //             'customer_company_name' => $request->company,
+        //             'customer_country' => $request->country,
+        //             'street_address' => $request->street,
+        //             'appertment_others' => $request->appartment,
+        //             'town_city' => $request->city,
+        //             'state_country' => $request->state,
+        //             'zip_code' => $request->zip,
+        //             'order_notes' => $request->order_notes,
+        //             'created_at' => Carbon::now()
+        //         ]);
+        //         if($billing){
+        //             $orderPurchase = OrderPurchase::insertGetId([
+        //                 'customer_id' => $customer,
+        //                 'orderTrackingID' => '#'.rand(11111111,99999999),
+        //                 'invoiceID' => rand(11,99).'-'.rand(11,99).'-'.rand(11,99),
+        //                 'billing_id' => $billing,
+        //                 'payment_method' => $request->payment_method,
+        //                 'payment_status' => 'pending',
+        //                 'grand_total' => $request->grand_total,
+        //                 'created_at' => Carbon::now(),
+        //             ]);
+        //             if($orderPurchase){
+        //                 $cart_customer_id = Cart::where('customer_id',$customer)->get();
+        
+        //                 foreach($cart_customer_id as $cart_item){
+        //                     $arr['customer_id'] = $customer;
+        //                     $arr['order_purchase_id'] = $orderPurchase;
+        //                     $arr['billing_id'] = $billing;
+        //                     $arr['product_id'] = $cart_item->product_id;
+        //                     $arr['qty'] = $cart_item->qty;
+        //                     OrderDetails::create($arr);
+        //                 }
+        
+        
+        //                 foreach($cart_customer_id as $ccid){
+        //                     $ccid->delete();
+        //                 }
+        
+        //                 $last_billing = BillingInfo::find($billing);
+        //                 // dd($last_billing->relWithCustomer->customer_lastname);
+        //                 $order_detail = OrderDetails::where('customer_id', $customer)->where('order_purchase_id', $orderPurchase)->get();
+        //                 foreach($cart_customer_id as $cart_item){
+        //                     Product::where('id', $cart_item->product_id)->decrement('quantity',$cart_item->qty);
+        //                 }
+        //                  Mail::to($request->email)->send(new OrderInvoiceMail($order_detail,$last_billing));
+     
+        //                 return redirect('/customer/dashboard')->with('orderDone','Your Order has been placed successfully.');
+        //             }
+        //         }else{
+        //             return back()->with('order_error','Order Can not complete');
+        //         }
+        // }
 
     }
 
@@ -156,6 +229,67 @@ class SslCommerzPaymentController extends Controller
             print_r($payment_options);
             $payment_options = array();
         }
+        // if($payment_options){
+        //     $customer = $request->customer;
+        //         Customer::find($customer)->update([
+        //             'customer_firstname' => $request->firstname,
+        //             'customer_lastname' => $request->lastname,
+        //             'customer_phone_number' => $request->phone_number
+        //         ]);
+        //         $billing = BillingInfo::insertGetId([
+        //             'customer_id' => $customer,
+        //             'customer_company_name' => $request->company,
+        //             'customer_country' => $request->country,
+        //             'street_address' => $request->street,
+        //             'appertment_others' => $request->appartment,
+        //             'town_city' => $request->city,
+        //             'state_country' => $request->state,
+        //             'zip_code' => $request->zip,
+        //             'order_notes' => $request->order_notes,
+        //             'created_at' => Carbon::now()
+        //         ]);
+        //         if($billing){
+        //             $orderPurchase = OrderPurchase::insertGetId([
+        //                 'customer_id' => $customer,
+        //                 'orderTrackingID' => '#'.rand(11111111,99999999),
+        //                 'invoiceID' => rand(11,99).'-'.rand(11,99).'-'.rand(11,99),
+        //                 'billing_id' => $billing,
+        //                 'payment_method' => $request->payment_method,
+        //                 'payment_status' => 'pending',
+        //                 'grand_total' => $request->grand_total,
+        //                 'created_at' => Carbon::now(),
+        //             ]);
+        //             if($orderPurchase){
+        //                 $cart_customer_id = Cart::where('customer_id',$customer)->get();
+        
+        //                 foreach($cart_customer_id as $cart_item){
+        //                     $arr['customer_id'] = $customer;
+        //                     $arr['order_purchase_id'] = $orderPurchase;
+        //                     $arr['billing_id'] = $billing;
+        //                     $arr['product_id'] = $cart_item->product_id;
+        //                     $arr['qty'] = $cart_item->qty;
+        //                     OrderDetails::create($arr);
+        //                 }
+        
+        
+        //                 foreach($cart_customer_id as $ccid){
+        //                     $ccid->delete();
+        //                 }
+        
+        //                 $last_billing = BillingInfo::find($billing);
+        //                 // dd($last_billing->relWithCustomer->customer_lastname);
+        //                 $order_detail = OrderDetails::where('customer_id', $customer)->where('order_purchase_id', $orderPurchase)->get();
+        //                 foreach($cart_customer_id as $cart_item){
+        //                     Product::where('id', $cart_item->product_id)->decrement('quantity',$cart_item->qty);
+        //                 }
+        //                  Mail::to($request->email)->send(new OrderInvoiceMail($order_detail,$last_billing));
+     
+        //                 return redirect('/customer/dashboard')->with('orderDone','Your Order has been placed successfully.');
+        //             }
+        //         }else{
+        //             return back()->with('order_error','Order Can not complete');
+        //         }
+        // }
 
     }
 

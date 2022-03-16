@@ -43,9 +43,25 @@
                     <strong>{{$payable_total}} TK</strong>
                 </li>
             </ul>
+            
             <form action="{{ url('/pay') }}" method="POST" class="needs-validation">
                 <input type="hidden" value="{{ csrf_token() }}" name="_token" />
+                <input type="hidden" name="firstname" value="{{ $arr['firstname'] }}">
+                <input type="hidden" name="lastname" value="{{ $arr['last_name'] }}">
+                <input type="hidden" name="country" value="{{ $arr['country'] }}">
+                <input type="hidden" name="street" value="{{ $arr['street'] }}">
+                <input type="hidden" name="appartment" value="{{ $arr['appartment'] }}">
+                <input type="hidden" name="city" value="{{ $arr['city'] }}">
+                <input type="hidden" name="state" value="{{ $arr['state'] }}">
+                <input type="hidden" name="zip" value="{{ $arr['zip'] }}">
+                <input type="hidden" name="phone_number" value="{{ $arr['phone_number'] }}">
+                <input type="hidden" name="email" value="{{ $arr['email'] }}">
+                <input type="hidden" name="payment_method" value="{{ $arr['payment_method'] }}">
+                <input type="hidden" name="company" value="{{ $arr['company'] }}">
+                <input type="hidden" name="order_notes" value="{{ $arr['order_notes'] }}">
                 <input type="hidden" name="payable_amount" value="{{ $payable_total }}">
+                <input type="hidden" name="grand_total" value="{{ $arr['grand_total'] }}">
+                <input type="text" name="customer" value="{{ $arr['customer'] }}">
                 <hr class="mb-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now</button>
             </form>
