@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ColorController;
@@ -162,4 +163,15 @@ Route::group(['middleware' => ['protectedRoutes']], function(){
     Route::get('/admin/coupon/status/{id}',[CouponCodeController::class,'statusChange'])->name('admin.coupon.status');
     Route::get('/admin/coupon/{id}/edit',[CouponCodeController::class, 'edit'])->name('admin.coupon.edit');
     Route::get('/admin/coupon/delete/{id}',[CouponCodeController::class, 'delete']);
+
+
+    //  Admin Banner Code Routes
+    Route::get('/admin/banners', [BannerController::class, 'index'])->name('admin.banner');
+    Route::get('/admin/banner/create', [BannerController::class, 'create'])->name('admin.banner.create');
+    Route::post('/admin/banner/create', [BannerController::class, 'store'])->name('admin.banner.store');
+    Route::get('/admin/banner/{id}/status', [BannerController::class,'changeStatus'])->name('admin.banner.status');
+    // Route::get('/admin/banner/{id}/edit', [BannerController::class,'edit'])->name('admin.banner.edit');
+    // Route::put('/admin/banner/update/{id}', [BannerController::class,'update'])->name('admin.banner.update');
+    Route::get('/admin/banner/delete/{id}', [BannerController::class,'delete'])->name('admin.banner.delete');
+    Route::put('/admin/banner/bulkOp',[BannerController::class, 'BulkOpration'])->name('admin.banner.bulk');
 });

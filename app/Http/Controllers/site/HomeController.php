@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\site;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Category;
@@ -30,7 +31,8 @@ class HomeController extends Controller
         $new_arrivals_products = Product::where('status',1)->orderBy('created_at', 'DESC')->limit(20)->get();
         $all_products = Product::where('status',1)->get();
         $recomanded_products = Product::where('status',1)->orderBy('created_at','DESC')->limit(8)->get();
-        return view('index', compact('recomanded_products','all_products','cart_data','explore_popular_categories','get_all_cats','all_brands','new_arrivals_products','customer'));
+        $banner_sliders = Banner::where('status',1)->get();
+        return view('index', compact('banner_sliders','recomanded_products','all_products','cart_data','explore_popular_categories','get_all_cats','all_brands','new_arrivals_products','customer'));
     }
 
     public function search(){
