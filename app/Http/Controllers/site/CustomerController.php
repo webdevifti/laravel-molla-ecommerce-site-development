@@ -115,6 +115,7 @@ class CustomerController extends Controller
         }else{
             $cart_data = [];
         }
+       
         $orderPurchase = OrderPurchase::where('customer_id',$customer->id)->get();
         
         $orderDetails = OrderDetails::where('customer_id', $customer->id)->get();

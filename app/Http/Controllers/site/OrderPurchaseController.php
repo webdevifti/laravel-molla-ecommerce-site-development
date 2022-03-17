@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
+// use PDF;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class OrderPurchaseController extends Controller
@@ -107,6 +108,7 @@ class OrderPurchaseController extends Controller
                     $last_billing = BillingInfo::find($billing);
                     // dd($last_billing->relWithCustomer->customer_lastname);
                     $order_detail = OrderDetails::where('customer_id', $customer)->where('order_purchase_id', $orderPurchase)->get();
+                    
                     foreach($cart_customer_id as $cart_item){
                         Product::where('id', $cart_item->product_id)->decrement('quantity',$cart_item->qty);
                     }
@@ -134,15 +136,20 @@ class OrderPurchaseController extends Controller
         }
     }
 
-    // public function getDownload()
-    // {
-    //     //PDF file is stored under project/public/download/info.pdf
-    //     $file= public_path(). "/download/info.pdf";
-
-    //     $headers = array(
-    //             'Content-Type: application/pdf',
-    //             );
-
-    //     return Response::download($file, 'hi.pdf', $headers);
-    // }
+    public function getDownload()
+    {
+        $cid = session('LoggedCustomer');
+        $customer = Customer::where('customer_email', $cid)->first();
+        // dd($customer);
+       
+        $orderPurchase = OrderPurchase::where('customer_id',$customer->id)->get();
+        
+        $orderDetails = OrderDetails::where('customer_id', $customer->id)->get();
+        $billing_info = BillingInfo::where('customer_id', $customer->id)->first();
+      // share data to view
+    //   view()->share('pdf',$data);
+      $pdf = PDF::loadView('pdf', ['customer' => $customer,'order_details'=>$orderDetails,'order_purchase'=>$orderPurchase,'last_billing'=> $billing_info]);
+      // download PDF file with download method
+      return $pdf->setPaper('a4')->download('pdf_file.pdf');
+    }
 }
