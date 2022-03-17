@@ -446,17 +446,36 @@
 	            		</div><!-- End .col-sm-6 col-lg-3 -->
 
 	            		<div class="col-sm-6 col-lg-3">
+                            @if(session('LoggedCustomer'))
 	            			<div class="widget">
 	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
 
 	            				<ul class="widget-list">
-	            					<li><a href="#">Sign In</a></li>
-	            					<li><a href="cart.html">View Cart</a></li>
-	            					<li><a href="#">My Wishlist</a></li>
+	            					<li> <a href="{{ route('customer.logout')  }}"
+                                    onclick="event.preventDefault();
+                                                  document.getElementById('signout-form').submit();">
+                                     {{ __('Sign Out') }}
+                                 </a>
+                                
+                                 <form id="signout-form" action="{{ route('customer.logout')  }}" method="POST" class="d-none">
+                                     @csrf
+                                 </form></li>
+	            					<li><a href="{{ route('cart') }}">View Cart</a></li>
+	            					<li><a href="{{ route('wishlist') }}">My Wishlist</a></li>
 	            					<li><a href="#">Track My Order</a></li>
 	            					<li><a href="#">Help</a></li>
 	            				</ul><!-- End .widget-list -->
 	            			</div><!-- End .widget -->
+                            @else
+                            <div class="widget">
+	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="{{ route('customer.auth') }}">Sign In</a></li>
+	            					<li><a href="#">Help</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div
+                            @endif
 	            		</div><!-- End .col-sm-6 col-lg-3 -->
 	            	</div><!-- End .row -->
 	            </div><!-- End .container -->

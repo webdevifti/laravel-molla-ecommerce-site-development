@@ -22,6 +22,11 @@ class CustomerAuthentication
         if(session()->has('LoggedCustomer') && ($request->path() == 'customer/auth')){
             return back();
         }
+
+        if(isset($_COOKIE['customer_email']) && ($request->path() == 'customer/auth')){
+            $request->session()->put('LoggedCustomer', $_COOKIE['customer_email']);
+            return redirect('/');
+        }
         return $next($request)->header('Cache-Control','no-cache','no-store','max-age=0','must-revalidate')->header('Pragma','no-cache')->header('Expires','Sat 01 Jan 1990 00:00:00 GMT');
     }
 }

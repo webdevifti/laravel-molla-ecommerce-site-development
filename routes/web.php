@@ -64,7 +64,7 @@ Route::group(['middleware' => ['CustomerAuth']], function(){
     Route::get('/customer/dashboard/', [CustomerController::class,'customerDashboard'])->name('customer.dashboard');
     Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('customer.logout');
     
-    Route::get('/wishlist',[WishlistController::class, 'index']);
+    Route::get('/wishlist',[WishlistController::class, 'index'])->name('wishlist');
     Route::post('/wishlist/create',[WishlistController::class, 'create']);
     Route::post('/wishlist/delete',[WishlistController::class, 'delete']);
     Route::get('/cart',[CartController::class, 'index'])->name('cart');
