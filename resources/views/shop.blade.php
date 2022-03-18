@@ -51,8 +51,9 @@
             </div><!-- End .toolbox -->
 
             <div class="products">
-                <div class="row">
-                    @foreach ($all_products as $item)
+                <div class="row product_div">
+                    {{-- <div class=""></div> --}}
+                    {{-- @foreach ($all_products as $item)
                     <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                         <div class="product">
                             <figure class="product-media">
@@ -62,7 +63,7 @@
 
                                 <div class="product-action-vertical">
                                     <a href="javascript:void(0)" onclick="addtowishlist('{{ $item->id }}')" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                </div><!-- End .product-action -->
+                                </div>
 
                                 <div class="product-action action-icon-top">
                                     @if($item->quantity < 1)
@@ -70,19 +71,18 @@
                                     @else
                                     <button onclick="addtocart('{{ $item->id }}','{{ (session('LoggedCustomer')) ? $customer->id : '' }}')" class="btn-product btn-cart"><span>add to cart</span></button>
                                     @endif
-                                    {{-- <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a> --}}
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
+                                   
+                                </div>
+                            </figure>
 
                             <div class="product-body">
                                 <div class="product-cat">
                                     <a href="/shop/{{ $item->relCatToProduct->category_slug }}">{{ $item->relCatToProduct->category_name }}</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="{{ route('product.detail', $item->product_slug) }}">{{ $item->product_title }}</a></h3><!-- End .product-title -->
+                                </div>
+                                <h3 class="product-title"><a href="{{ route('product.detail', $item->product_slug) }}">{{ $item->product_title }}</a></h3>
                                 <div class="product-price">
                                     BDT: {{ $item->selling_price }}
-                                </div><!-- End .product-price -->
+                                </div>
                                 <div class="ratings-container">
                                     <div class="ratings">
                                         <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
@@ -91,12 +91,13 @@
                                 </div><!-- End .rating-container -->
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
-                    </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
-                    @endforeach
+                    </div>
+                    @endforeach --}}
                 </div><!-- End .row -->
 
                 <div class="load-more-container text-center">
-                    <a href="#" class="btn btn-outline-darker btn-load-more">More Products <i class="icon-refresh"></i></a>
+                    <button class="btn btn-outline-darker btn-load-more" data-paginate="2">More Products <i class="icon-refresh"></i></button>
+                    <p class="invisible">No more product found...</p>
                 </div><!-- End .load-more-container -->
             </div><!-- End .products -->
 
@@ -361,4 +362,40 @@
     <input type="hidden" name="sort" id="sort">
 </form>
 @endsection
-        
+
+@section('site_footer')
+<script>
+     var paginate = 1;
+        loadMoreData(paginate);
+
+        $('.btn-load-more').click(function() {
+            var page = $(this).data('paginate');
+            loadMoreData(page);
+            $(this).data('paginate', page+1);
+        });
+        // run function when user click load more button
+        function loadMoreData(paginate) {
+            $.ajax({
+                url: '?page=' + paginate,
+                type: 'get',
+                datatype: 'html',
+                beforeSend: function() {
+                    $('.btn-load-more').text('Loading...');
+                }
+            })
+            .done(function(data) {
+                if(data.length == 0) {
+                    $('.invisible').removeClass('invisible');
+                    $('.btn-load-more').hide();
+                    return;
+                  } else {
+                    $('.btn-load-more').text('Load more products...');
+                    $('.product_div').append(data);
+                  }
+            })
+               .fail(function(jqXHR, ajaxOptions, thrownError) {
+                  alert('Something went wrong.');
+               });
+        }
+</script>
+@endsection
