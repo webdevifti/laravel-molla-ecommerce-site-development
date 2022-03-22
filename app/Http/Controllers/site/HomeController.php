@@ -95,49 +95,52 @@ class HomeController extends Controller
         }else{
             $all_products = Product::where('status',1)->paginate(6);
 
-            if ($request->ajax()) {
-                $html = '';
+            // if ($request->ajax()) {
+            //     $html = '';
     
-                foreach ($all_products as $item) {
-                    $html.=' <div class="col-6 col-md-4 col-lg-4 col-xl-3">
-                    <div class="product">
-                        <figure class="product-media">
-                            <a href="'.route('product.detail', $item->product_slug).'">
-                                <img src="'.asset('uploads/products/previews/'.$item->product_preview_img).'" alt="Product image" class="product-image">
-                            </a>
+            //     foreach ($all_products as $item) {
+            //         $html.='<div class="col-6 col-md-4 col-lg-4 col-xl-3">
+            //         <div class="product">
+            //             <figure class="product-media">
+            //                 <a href="'.route('product.detail', $item->product_slug).'">
+            //                     <img src="'.asset('uploads/products/previews/'.$item->product_preview_img).'" alt="Product image" class="product-image">
+            //                 </a>
 
-                            <div class="product-action-vertical">
-                                <a href="javascript:void(0)" onclick="addtowishlist('.$item->id.')" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                            </div>
+            //                 <div class="product-action-vertical">
+            //                     <a href="javascript:void(0)" onclick="addtowishlist('.$item->id.')" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+            //                 </div>
 
-                            <div class="product-action action-icon-top">'.if($item->quantity < 1){.'<span style="color: red">Out of stock</span>'.}else{.'
-                                <button onclick="addtocart('.$item->id.','.(session('LoggedCustomer')) ? $customer->id : ''.')" class="btn-product btn-cart"><span>add to cart</span></button>
-                                '.}'
-                               
-                            </div>
-                        </figure>
+            //                     <div class="product-action action-icon-top">
+            //                         @if($item->quantity < 1)
+            //                         <span style="color: red">Out of stock</span>
+            //                         @else
+            //                         <button onclick="addtocart('{{ $item->id }}','{{ (session('LoggedCustomer')) ? $customer->id : '' }}')" class="btn-product btn-cart"><span>add to cart</span></button>
+            //                         @endif
+                                   
+            //                     </div> 
+            //             </figure>
 
-                        <div class="product-body">
-                            <div class="product-cat">
-                                <a href="/shop/'.$item->relCatToProduct->category_slug.'">'.$item->relCatToProduct->category_name.'</a>
-                            </div>
-                            <h3 class="product-title"><a href="'.route('product.detail', $item->product_slug).'">'.$item->product_title .'</a></h3>
-                            <div class="product-price">
-                                BDT: '.$item->selling_price.'
-                            </div>
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 0%;"></div>
-                                </div>
-                                <span class="ratings-text">( 0 Reviews )</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>';
-                }
+            //             <div class="product-body">
+            //                 <div class="product-cat">
+            //                     <a href="/shop/'.$item->relCatToProduct->category_slug.'">'.$item->relCatToProduct->category_name.'</a>
+            //                 </div>
+            //                 <h3 class="product-title"><a href="'.route('product.detail', $item->product_slug).'">'.$item->product_title .'</a></h3>
+            //                 <div class="product-price">
+            //                     BDT: '.$item->selling_price.'
+            //                 </div>
+            //                 <div class="ratings-container">
+            //                     <div class="ratings">
+            //                         <div class="ratings-val" style="width: 0%;"></div>
+            //                     </div>
+            //                     <span class="ratings-text">( 0 Reviews )</span>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </div>';
+            //     }
     
-                return $html;
-            }
+            //     return $html;
+            // }
         }
        
         // 

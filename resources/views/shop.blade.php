@@ -53,7 +53,7 @@
             <div class="products">
                 <div class="row product_div">
                     {{-- <div class=""></div> --}}
-                    {{-- @foreach ($all_products as $item)
+                    @foreach ($all_products as $item)
                     <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                         <div class="product">
                             <figure class="product-media">
@@ -92,7 +92,7 @@
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
                     </div>
-                    @endforeach --}}
+                    @endforeach
                 </div><!-- End .row -->
 
                 <div class="load-more-container text-center">
@@ -364,7 +364,7 @@
 @endsection
 
 @section('site_footer')
-<script>
+{{-- <script>
      var paginate = 1;
         loadMoreData(paginate);
 
@@ -397,5 +397,5 @@
                   alert('Something went wrong.');
                });
         }
-</script>
+</script> --}}
 @endsection
